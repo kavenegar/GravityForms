@@ -72,7 +72,7 @@ $url = "https://api.kavenegar.com/v1/$username/account/info.json";
 }
 		if ($action == "send") {
 
-		$messg= rawurlencode(basename($messages));
+		$messg= rawurlencode($messages);
 		
 		$url = "https://api.kavenegar.com/v1/$username/sms/send.json?receptor=$to&sender=$from&message=$messg";
 				
