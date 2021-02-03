@@ -108,7 +108,19 @@ $url = "https://api.kavenegar.com/v1/$username/account/info.json";
 				
 		$templateName=trim($templateName);
 
-		$url = "http://api.kavenegar.com/v1/$username/verify/lookup.json?receptor=$to&template=$templateName".		  $tokensParam;
+	    //$numbers = implode(",", $this->mobile );
+		$numbers = explode(",", $to );
+		
+	if(count($numbers)>15)
+	{
+	    return "تعداد گیرنده ها بیش از حد مجاز می باشد(حداکثر تعداد گیرنده 15 عدد می باشد)";
+	}
+	
+	
+	$result="";
+	foreach ($numbers as $number) { 
+		    
+		    $url = "http://api.kavenegar.com/v1/$username/verify/lookup.json?receptor=$number&template=$templateName".		  $tokensParam;
 		
 		if ( extension_loaded( 'curl' ) ) {
 			$ch = curl_init( $url );
@@ -126,13 +138,18 @@ $arr = json_decode($sms_response, true);
 if($arr['return']['status']=='200')
 {
 
-return true;
+$result= true;
 }
 else	
 {
 echo $arr['return']['status'];
-return false;
+$result= false;
 }
+		    
+		}
+		return $result;
+
+		
 		
 		}
 		
